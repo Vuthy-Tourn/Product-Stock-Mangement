@@ -97,8 +97,6 @@ public class Main {
     }
 
     static void displayWelcomeBanner() {
-        clearScreen();
-
         System.out.print(ANSI_BLUE + ANSI_BOLD + """
     ╔═══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╗
     ║                                                                                                                                                                                                           ║
@@ -135,11 +133,7 @@ public class Main {
         pressEnterToContinue();
     }
 
-
-
-
     static void displayMainMenu() {
-        clearScreen();
         System.out.println(ANSI_CYAN + "╔" + "═".repeat(48) + "╗" + ANSI_RESET);
         System.out.println(ANSI_CYAN + "║" + ANSI_YELLOW + ANSI_BOLD + "          PRODUCT STOCK MANAGEMENT MENU         " + ANSI_RESET + ANSI_CYAN + "║" + ANSI_RESET);
         System.out.println(ANSI_CYAN + "╠" + "═".repeat(48) + "╣" + ANSI_RESET);
@@ -154,7 +148,6 @@ public class Main {
     }
 
     static void setupStock() {
-        clearScreen();
         displaySectionHeader("SETUP STOCK");
 
         numStocks = getIntInput("[+] Insert number of Stock: ");
@@ -179,7 +172,6 @@ public class Main {
     }
 
     static void viewStock() {
-        clearScreen();
         displaySectionHeader("VIEW STOCK");
 
         for (int i = 0; i < numStocks; i++) {
@@ -193,7 +185,7 @@ public class Main {
     }
 
     static void insertProduct() {
-        clearScreen();
+        
         displaySectionHeader("INSERT PRODUCT");
 
         viewStock();
@@ -250,7 +242,6 @@ public class Main {
     }
 
     static void updateProduct() {
-        clearScreen();
         displaySectionHeader("UPDATE PRODUCT");
 
         viewStock();
@@ -296,7 +287,6 @@ public class Main {
     }
 
     static void deleteProduct() {
-        clearScreen();
         displaySectionHeader("DELETE PRODUCT");
 
         viewStock();
@@ -319,7 +309,7 @@ public class Main {
         ArrayList<Integer> matchingPositions = new ArrayList<>();
         for (int j = 0; j < catalogSizes[stockIndex]; j++) {
             if (!stocks[stockIndex][j].equals("EMPTY") &&
-                    stocks[stockIndex][j].toLowerCase().equals(productName.toLowerCase())) {
+                    stocks[stockIndex][j].equalsIgnoreCase(productName)) {
                 matchingPositions.add(j);
             }
         }
@@ -330,7 +320,7 @@ public class Main {
         }
 
         if (matchingPositions.size() == 1) {
-            int positionToDelete = matchingPositions.get(0);
+            int positionToDelete = matchingPositions.getFirst();
             deleteProductFromPosition(stockIndex, positionToDelete);
             return;
         }
@@ -366,7 +356,6 @@ public class Main {
     }
 
     static void viewInsertHistory() {
-        clearScreen();
         displaySectionHeader("INSERT HISTORY");
 
         if (insertHistory.isEmpty()) {
@@ -411,10 +400,5 @@ public class Main {
     static void pressEnterToContinue() {
         System.out.println(ANSI_YELLOW + "\nPress Enter to continue..." + ANSI_RESET);
         scanner.nextLine();
-    }
-
-    static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }
